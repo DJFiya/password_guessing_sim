@@ -1,0 +1,1 @@
+//Utility Manager for background features such as timer.
