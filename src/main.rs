@@ -5,8 +5,34 @@ mod generator;
 mod worker;
 mod utils;
 
+use generator::Generator;
+use utils::{check_match, elapsed, now};
+
 fn main() {
-    println!("Hello, world!");
+    // Target password to crack (can be anything printable)
+    let target_password = "+9#$";
+    println!("Starting password cracking simulation...");
+
+    let start_time = now();
+
+    let mut generator = Generator::new();
+    let mut attempts = 0;
+
+    loop {
+        let guess = generator.next_guess();
+        attempts += 1;
+
+        if check_match(&guess, target_password) {
+            let duration = elapsed(start_time);
+            println!("Password cracked: \"{}\"", guess);
+            println!("Attempts: {}", attempts);
+            println!("Time taken: {:.2?}", duration);
+            break;
+        }
+        if attempts % 1_000_000_000 == 0 {
+            println!("Tried {} ({} attempts)", guess, attempts);
+        }
+    }
 }
 
 /*

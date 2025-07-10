@@ -40,6 +40,8 @@ The project is organized into modular components:
 
 ## 🚧 Development Roadmap
 
+**Current Status: _Phase 1: Basic Brute Force_**
+
 ### ✅ Phase 0: Project Initialization
 - Rust binary crate setup with clear module structure
 - Compile-ready placeholders to support future phases
