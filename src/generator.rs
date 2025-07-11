@@ -1,34 +1,44 @@
-use crate::utils::get_charset;
+//Password generator / solver for password guessing simulation
+
+pub use crate::config::Config;
 
 pub struct Generator {
-    current: Vec<usize>,
-    charset: Vec<char>,
+    pub current: Vec<usize>,
+    pub config: Config,
 }
+
 
 impl Generator {
     // Creates a new password guess generator.
-    pub fn new() -> Self {
+    pub fn new(config: Config) -> Self {
         Generator {
             current: vec![0],
-            charset: get_charset(),
+            config,
         }
     }
 
-    pub fn next_guess(&mut self) -> String {
-        // Convert indices to characters
-        let guess: String = self.current
-            .iter()
-            .map(|&i| self.charset[i])
-            .collect();
 
-        self.increment();
+    pub fn next_guess(&mut self) -> Option<String> {
+        // Generate the next password guess based on the current state
+        while self.current.len() <= self.config.max_length {
+            let guess: String = self.current
+                .iter()
+                .map(|&i| self.config.charset[i])
+                .collect();
 
-        guess
+            self.increment();
+
+            if guess.len() >= self.config.min_length {
+                return Some(guess);
+            }
+        }
+        None
     }
 
+
     fn increment(&mut self) {
-        // Increment the current guess
-        let base = self.charset.len();
+        // Increment the current guess index
+        let base = self.config.charset.len();
         let mut index = self.current.len() - 1;
 
         loop {
@@ -39,6 +49,9 @@ impl Generator {
             } else {
                 self.current[index] = 0;
                 if index == 0 {
+                    if self.current.len() >= self.config.max_length {
+                        break;
+                    }
                     self.current.insert(0, 0);
                     break;
                 } else {

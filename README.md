@@ -13,14 +13,13 @@ This project explores password cracking strategies using brute-force, heuristics
 >
 > The author does **not endorse or permit** any unethical, illegal, or unauthorized use of this codebase.
 
-
 ---
 
 ## 📌 Project Objectives
 
 - Design a password guessing simulator to demonstrate brute-force and smart strategies
 - Explore systems programming concepts with Rust, including thread safety and ownership
-- Experiment with performance optimization through multithreading and filtering
+- Experiment with performance optimization through multithreading and constraint-based filtering
 - Build a modular, maintainable CLI-based application
 
 ---
@@ -34,31 +33,32 @@ The project is organized into modular components:
 | `config`     | Handles user-defined settings, such as character sets and length |
 | `generator`  | Generates password guesses based on strategy and constraints     |
 | `worker`     | Coordinates search tasks and manages thread execution            |
-| `utils`      | Provides shared functionality (e.g., timers, charset tools)      |
+| `utils`      | Provides shared functionality (e.g., timers, filters, charsets)  |
 
 ---
 
 ## 🚧 Development Roadmap
 
-**Current Status: _Phase 1: Basic Brute Force_**
+**Current Status: _Phase 2: Configurable Constraints_**
 
 ### ✅ Phase 0: Project Initialization
 - Rust binary crate setup with clear module structure
 - Compile-ready placeholders to support future phases
 
-### 🔍 Phase 1: Basic Brute Force
+### ✅ Phase 1: Basic Brute Force
 - Generate and test passwords sequentially using a fixed charset
 - Single-threaded execution with timing and output reporting
 
-### ⚙️ Phase 2: Configurable Constraints
-- Custom charset (letters, digits, symbols)
+### ✅ Phase 2: Configurable Constraints
+- Custom character sets (letters, digits, symbols, full ASCII)
 - Minimum and maximum password lengths
-- Known patterns (prefixes, suffixes, required characters)
+- Pattern support: known prefixes, suffixes, and required characters
+- Runtime filtering of invalid guesses
 
-### 🧠 Phase 3: Smart Strategies
+### 🔍 Phase 3: Smart Strategies
 - Dictionary-based attacks using external wordlists
-- Combinatorial approaches (e.g., word + number)
-- Leetspeak-style substitutions and patterns
+- Combinatorial strategies (e.g., words + numbers + symbols)
+- Leetspeak-style substitutions and hybrid pattern logic
 
 ### 🧵 Phase 4: Multithreading
 - Parallelize the search space across multiple threads
@@ -66,15 +66,15 @@ The project is organized into modular components:
 - Ensure graceful termination when a match is found
 
 ### 📊 Phase 5: Performance & Observability
-- Track and display guesses per second and thread utilization
-- Add verbosity and logging controls
-- CLI interface for benchmarking and configuration
+- Track guesses per second, time per match, and thread activity
+- Add logging levels and verbosity control
+- CLI interface for full configuration and benchmarking
 
 ### 🌟 Phase 6: Optional Enhancements
-- Pause/resume functionality
-- TUI/GUI frontend (for visualization)
-- WebAssembly version (demo only)
-- Configurable thread pool and workload distribution modes
+- Pause/resume functionality for long-running tasks
+- TUI/GUI frontend (e.g., using `egui` or `tui-rs`)
+- WebAssembly build (demo only)
+- Configurable thread pool and parallelism strategies
 
 ---
 
@@ -92,8 +92,6 @@ git clone https://github.com/DJFiya/password_guessing_sim.git
 cd password_guessing_sim
 cargo run
 ```
-
----
 
 ### ⚠️ License
 
